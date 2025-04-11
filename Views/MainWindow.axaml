@@ -1,0 +1,119 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:components="using:Components"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="GetStartedApp.Views.MainWindow"
+        x:DataType="components:ConnectionController"
+        Background="#3c3c3e"
+        BorderBrush="Transparent"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="-1"
+        ExtendClientAreaToDecorationsHint="False"
+        SystemDecorations="None"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="GetStartedApp">
+        
+    
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <components:ConnectionController/>
+    </Design.DataContext>
+
+    <Grid>
+        <!-- Custom Title Bar (Draggable + Buttons) -->
+        <DockPanel Background="Transparent" Height="40" VerticalAlignment="Top" 
+                   PointerMoved="InputElement_OnPointerMoved"
+                   PointerPressed="InputElement_OnPointerPressed"
+                   PointerReleased="InputElement_OnPointerReleased"
+                   >
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" Margin="15,5,0,0">
+                <Button Width="12" Height="12" Background="#FF5F56" CornerRadius="6"
+                        Click="Close_Click"
+                        
+                        />
+                <Button Width="12" Height="12" Background="#FFBD2E" CornerRadius="6" Margin="6,0,0,0"
+                        Click="Minimize_Click"
+                        />
+                <Button Width="12" Height="12" Background="#27C93F" CornerRadius="6" Margin="6,0,0,0"
+                        Click="Maximize_Click"/>
+            </StackPanel>
+        </DockPanel>
+
+        <!-- Main Content -->
+        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+            <StackPanel Margin="20 0">
+                <Label HorizontalAlignment="Center" Width="300" Foreground="#337789">You</Label>
+                <TextBlock Text="{Binding instanceUUID}" Foreground="White"
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" 
+                           IsVisible="True" 
+                           Margin="0 0 0 5"
+                           Width="287"/>
+                <Label HorizontalAlignment="Center" Width="300" Foreground="#a41f52">Connection</Label>
+                <TextBlock Text="{Binding CurrentConnection}" Foreground="White"
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" 
+                           IsVisible="True" 
+                           Margin="0 0 0 10"
+                           Width="287"/>
+                <TextBox Name="Connection" 
+                         Foreground="White"  
+                         Watermark="connection..." 
+                         HorizontalAlignment="Center" 
+                         Width="287"></TextBox>
+                <Button Click="ChangeConnection" Width="287" Margin="0 5" Foreground="White"  HorizontalContentAlignment="Center" HorizontalAlignment="Center"> Change Connection</Button>
+                <TextBox Name="AllowedConnections" 
+                         Foreground="White"  
+                         Watermark="connection..." 
+                         HorizontalAlignment="Center" 
+                         Width="287"></TextBox>
+                <Button Click="AddAllowedConnection" 
+                        Width="287" 
+                        Margin="0 5" 
+                        Foreground="White"  
+                        HorizontalContentAlignment="Center" 
+                        HorizontalAlignment="Center"> Add Connector</Button>
+                <Expander VerticalAlignment="Top" 
+                          HorizontalAlignment="Center" 
+                          Width="287"
+                          Height="200"
+                          Background="#272728"
+                          IsExpanded="True">
+                    <Expander.Header>
+                        Allowed Connectors
+                    </Expander.Header>
+                    <ScrollViewer>
+                        <ListBox ItemsSource="{Binding allowedConnections}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding}"></TextBox>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </ScrollViewer>
+                </Expander>
+            </StackPanel>
+            <StackPanel>
+                <Button Click="OpenFileButton_Clicked">Pick Folder</Button>
+                <TextBlock Name="FolderName"></TextBlock>
+                <ScrollViewer Height="500" Width="300">
+                    <StackPanel Name="FileTree">
+                        
+                    </StackPanel>
+                </ScrollViewer>
+            </StackPanel>
+            <Border Grid.Row="2" Grid.Column="0">
+                <DockPanel HorizontalAlignment="Stretch" DataContext="{Binding clock}">
+                    <TextBlock Text="{Binding NextDownloadCycle}"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding CurrentTime}"/>                   
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+        </StackPanel>
+        
+    </Grid>
+</Window>
