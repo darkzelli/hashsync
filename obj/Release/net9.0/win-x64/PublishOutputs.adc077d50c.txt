@@ -1,0 +1,6 @@
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/publish/windows/GetStartedApp.pdb
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/publish/windows/aspnetcorev2_inprocess.dll
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/publish/windows/av_libglesv2.dll
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/publish/windows/libHarfBuzzSharp.dll
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/publish/windows/libSkiaSharp.dll
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/publish/windows/GetStartedApp.exe

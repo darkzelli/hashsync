@@ -1,0 +1,5 @@
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/publish/macos-arm/GetStartedApp.pdb
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/publish/macos-arm/libAvaloniaNative.dylib
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/publish/macos-arm/libHarfBuzzSharp.dylib
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/publish/macos-arm/libSkiaSharp.dylib
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/publish/macos-arm/GetStartedApp

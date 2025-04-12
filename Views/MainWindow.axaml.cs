@@ -63,7 +63,7 @@ public partial class MainWindow : Window
     }
 
     //Change Connection
-    private void ChangeConnection(object? sender, RoutedEventArgs e)
+   private void ChangeConnection(object? sender, RoutedEventArgs e)
     {
         if (Connection.Text != null)
         {
@@ -100,7 +100,7 @@ public partial class MainWindow : Window
                 {
                     Text = file.Name,
                     Margin = new Thickness(5, 0, 0, 0),
-                    Foreground = Brushes.LightGray
+                    Foreground = Brushes.Blue
                 };
                 parentPanel.Children.Add(fileText);
             }
@@ -138,7 +138,7 @@ public partial class MainWindow : Window
         }
         
     }
-
+    
     private async void OpenFileButton_Clicked(object sender, RoutedEventArgs args)
     {
         var rootPanel = this.FindControl<StackPanel>("FileTree");
@@ -153,7 +153,7 @@ public partial class MainWindow : Window
         if (!folders.Any()) { return;}
         DFS(folders.First());
         
-        /*var filesandfolders = folders[0].GetItemsAsync().ToBlockingEnumerable().ToList();
+        var filesandfolders = folders[0].GetItemsAsync().ToBlockingEnumerable().ToList();
         foreach (var item in filesandfolders)
         {
             if (item is IStorageFile file)
@@ -176,6 +176,6 @@ public partial class MainWindow : Window
             var fullPath = folder.Path?.LocalPath;
     
             FolderName.Text = folder.Name;
-        }*/
+        }
     }
 }

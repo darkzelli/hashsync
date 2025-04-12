@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 
 namespace Components;
@@ -7,6 +8,7 @@ namespace Components;
 public class ConnectionController : INotifyPropertyChanged
 {
     private static ConnectionController? controllerInstance { get; set; }
+    private const string UuidFilePath = "./uuid.txt";
     public string instanceUUID { get; private set; }
     private string _currentConnection;
     public string[] allowedConnections { get; private set; }
@@ -33,12 +35,26 @@ public class ConnectionController : INotifyPropertyChanged
 
     private ConnectionController()
     {
-        instanceUUID = Guid.NewGuid().ToString("D");
+        instanceUUID = LoadOrCreateUUID();
         _currentConnection = "N/A";
-        allowedConnections = new string[0];
-
+        allowedConnections = Array.Empty<string>();
     }
 
+    
+    private string LoadOrCreateUUID()
+    {
+        if (File.Exists(UuidFilePath))
+        {
+            return File.ReadAllText(UuidFilePath).Trim();
+        }
+        else
+        {
+            var newUUID = Guid.NewGuid().ToString("D");
+            File.WriteAllText(UuidFilePath, newUUID);
+            return newUUID;
+        }
+    }
+    
     public static ConnectionController GetInstance()
     {
         if (controllerInstance == null)

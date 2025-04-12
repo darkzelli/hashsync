@@ -1,0 +1,5 @@
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/bin/Release/net9.0/osx-x64/publish/GetStartedApp.pdb
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/bin/Release/net9.0/osx-x64/publish/libAvaloniaNative.dylib
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/bin/Release/net9.0/osx-x64/publish/libHarfBuzzSharp.dylib
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/bin/Release/net9.0/osx-x64/publish/libSkiaSharp.dylib
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/bin/Release/net9.0/osx-x64/publish/GetStartedApp

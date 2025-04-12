@@ -3,10 +3,11 @@
         xmlns:components="using:Components"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="960" d:DesignHeight="540"
         x:Class="GetStartedApp.Views.MainWindow"
         x:DataType="components:ConnectionController"
-        Background="#3c3c3e"
+        Background="Transparent"
+        TransparencyLevelHint="AcrylicBlur"
         BorderBrush="Transparent"
         ExtendClientAreaChromeHints="NoChrome"
         ExtendClientAreaTitleBarHeightHint="-1"
@@ -23,97 +24,154 @@
     </Design.DataContext>
 
     <Grid>
-        <!-- Custom Title Bar (Draggable + Buttons) -->
-        <DockPanel Background="Transparent" Height="40" VerticalAlignment="Top" 
+        <!-- Define two rows: TitleBar (fixed height), Content (fills the rest) -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Title bar height -->
+            <RowDefinition Height="*"/>    <!-- Remaining space -->
+        </Grid.RowDefinitions>
+
+        <!-- Custom Title Bar -->
+        <DockPanel Grid.Row="0"
+                   Background="Transparent"
+                   Height="40"
+                   Margin="0 0 0 10"
+                   VerticalAlignment="Top"
                    PointerMoved="InputElement_OnPointerMoved"
                    PointerPressed="InputElement_OnPointerPressed"
-                   PointerReleased="InputElement_OnPointerReleased"
-                   >
+                   PointerReleased="InputElement_OnPointerReleased">
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" Margin="15,5,0,0">
-                <Button Width="12" Height="12" Background="#FF5F56" CornerRadius="6"
-                        Click="Close_Click"
-                        
-                        />
-                <Button Width="12" Height="12" Background="#FFBD2E" CornerRadius="6" Margin="6,0,0,0"
-                        Click="Minimize_Click"
-                        />
-                <Button Width="12" Height="12" Background="#27C93F" CornerRadius="6" Margin="6,0,0,0"
-                        Click="Maximize_Click"/>
+                <Button Width="12" Height="12" Background="#FF5F56" CornerRadius="6" Click="Close_Click"/>
+                <Button Width="12" Height="12" Background="#FFBD2E" CornerRadius="6" Margin="6,0,0,0" Click="Minimize_Click"/>
+                <Button Width="12" Height="12" Background="#27C93F" CornerRadius="6" Margin="6,0,0,0" Click="Maximize_Click"/>
             </StackPanel>
         </DockPanel>
 
         <!-- Main Content -->
-        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-            <StackPanel Margin="20 0">
-                <Label HorizontalAlignment="Center" Width="300" Foreground="#337789">You</Label>
-                <TextBlock Text="{Binding instanceUUID}" Foreground="White"
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Center" 
-                           IsVisible="True" 
-                           Margin="0 0 0 5"
-                           Width="287"/>
-                <Label HorizontalAlignment="Center" Width="300" Foreground="#a41f52">Connection</Label>
-                <TextBlock Text="{Binding CurrentConnection}" Foreground="White"
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Center" 
-                           IsVisible="True" 
-                           Margin="0 0 0 10"
-                           Width="287"/>
-                <TextBox Name="Connection" 
-                         Foreground="White"  
-                         Watermark="connection..." 
-                         HorizontalAlignment="Center" 
-                         Width="287"></TextBox>
-                <Button Click="ChangeConnection" Width="287" Margin="0 5" Foreground="White"  HorizontalContentAlignment="Center" HorizontalAlignment="Center"> Change Connection</Button>
-                <TextBox Name="AllowedConnections" 
-                         Foreground="White"  
-                         Watermark="connection..." 
-                         HorizontalAlignment="Center" 
-                         Width="287"></TextBox>
-                <Button Click="AddAllowedConnection" 
-                        Width="287" 
-                        Margin="0 5" 
-                        Foreground="White"  
-                        HorizontalContentAlignment="Center" 
-                        HorizontalAlignment="Center"> Add Connector</Button>
-                <Expander VerticalAlignment="Top" 
-                          HorizontalAlignment="Center" 
-                          Width="287"
-                          Height="200"
-                          Background="#272728"
-                          IsExpanded="True">
-                    <Expander.Header>
-                        Allowed Connectors
-                    </Expander.Header>
-                    <ScrollViewer>
-                        <ListBox ItemsSource="{Binding allowedConnections}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBox Text="{Binding}"></TextBox>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </ScrollViewer>
-                </Expander>
-            </StackPanel>
-            <StackPanel>
-                <Button Click="OpenFileButton_Clicked">Pick Folder</Button>
-                <TextBlock Name="FolderName"></TextBlock>
-                <ScrollViewer Height="500" Width="300">
-                    <StackPanel Name="FileTree">
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2"/> <!-- Width of the separator -->
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- First panel (left) -->
+            <Grid Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Border  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10 0">
+                    <StackPanel>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Client" FontSize="32" Margin="0 5"/> 
+                        <TextBlock HorizontalAlignment="Left" Margin="0 0 0 5">Client UUID</TextBlock>
+                        <Border Background="#33FFFFFF" CornerRadius="5" Padding="15 20 0 0" Height="40"><TextBlock Text="{Binding instanceUUID}"  Height="40"></TextBlock></Border>
+                        <ProgressBar Height="20" Minimum="0" Maximum="100" Value="14" Margin="0 10 0 0"/>
+                        <DockPanel HorizontalAlignment="Stretch" DataContext="{Binding clock}" Margin="0 10 0 0">
+                            <TextBlock Text="{Binding NextDownloadCycle}" VerticalAlignment="Center" />  
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">  
+                                <TextBlock TextAlignment="Center" Text="{Binding CurrentTime}" VerticalAlignment="Center"/>  
+                                <ToggleButton Margin="0 0 5 0" VerticalAlignment="Center">Tracked?</ToggleButton> 
+                                <TextBox Watermark="hrs" Background="#33FFFFFF" Margin="0 0 5 0" VerticalAlignment="Center"/> 
+                                <TextBox Watermark="mins" Background="#33FFFFFF" Margin="0 0 5 0" VerticalAlignment="Center"/> 
+                                <Button Content="Change Time" VerticalAlignment="Center"/> 
+                            </StackPanel>
+                        </DockPanel>
+                        <TextBlock HorizontalAlignment="Left" Margin="0 10 0 5">Allowed Connections</TextBlock>
+                        <Grid HorizontalAlignment="Stretch" Margin="0 0 0 5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />    
+                                <ColumnDefinition Width="Auto" />  
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox Name="AllowedConnections" Grid.Column="0"  Background="#33FFFFFF" Watermark="New Connection UUID" Margin="0,0,5,0"/>
+                            <Button Grid.Column="1" HorizontalContentAlignment="Center" VerticalAlignment="Center" Content="+" Width="30" Click="AddAllowedConnection"/>
+                        </Grid>
+                        <Border Background="#33FFFFFF" Margin="0 0 0 0" CornerRadius="10">
+                            <ScrollViewer Height="100" Width="400">
+                                <ListBox ItemsSource="{Binding allowedConnections}" Background="Transparent">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate> 
+                                            <TextBlock Width="300" Text="{Binding}" Background="Transparent"></TextBlock>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </ScrollViewer> 
+                        </Border>
+                        <TextBlock HorizontalAlignment="Left" Margin="0 10 0 5">Tracked</TextBlock>
+                        <Grid HorizontalAlignment="Stretch" Margin="0 0 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" /> 
+                                <ColumnDefinition Width="Auto" />  
+                            </Grid.ColumnDefinitions>
+
+                            <Border Background="#33FFFFFF" CornerRadius="5" Padding="15 20 0 0" Margin="0 0 5 0" Height="30"><TextBlock Name="FolderName"  Height="40"></TextBlock></Border>
+                            <Button Grid.Column="1" HorizontalContentAlignment="Center" VerticalAlignment="Center"  Content="F" Width="30" Click="OpenFileButton_Clicked"/>
+                            
+                        </Grid>
+                        <StackPanel>
+                            <TextBlock HorizontalAlignment="Left" Margin="0 10 0 5">File Tree</TextBlock>
+                            <Border Background="#33FFFFFF" CornerRadius="10" >
+                                <ScrollViewer Height="100" Width="400">
+                                    <StackPanel Name="FileTree">
                         
+                                    </StackPanel>
+                                </ScrollViewer> 
+                            </Border>
+                            
+                        </StackPanel>
                     </StackPanel>
-                </ScrollViewer>
-            </StackPanel>
-            <Border Grid.Row="2" Grid.Column="0">
-                <DockPanel HorizontalAlignment="Stretch" DataContext="{Binding clock}">
-                    <TextBlock Text="{Binding NextDownloadCycle}"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="{Binding CurrentTime}"/>                   
-                    </StackPanel>
-                </DockPanel>
-            </Border>
-        </StackPanel>
-        
+                </Border>
+            </Grid>
+
+            <!-- Separator -->
+            <Border Grid.Column="1" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="400"/>
+
+            <!-- Second panel (right) -->
+            <Grid Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Border  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10 0">
+                    <StackPanel>
+                        <TextBlock Name="Connection" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Connection" FontSize="32" Margin="0 5"/> 
+                        <TextBlock HorizontalAlignment="Left" Margin="0 0 0 5">Connection UUID</TextBlock>
+                        <TextBox Background="#33FFFFFF" Watermark="Enter Connection UUID" Height="40"></TextBox>
+                        <ProgressBar Height="20" Minimum="0" Maximum="100" Value="14" Margin="0 10 0 0"/>
+                        <DockPanel HorizontalAlignment="Stretch" DataContext="{Binding clock}" Margin="0 10 0 0">
+                            <TextBlock Text="{Binding NextDownloadCycle}" VerticalAlignment="Center" />  
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">  
+                                <TextBlock TextAlignment="Center" Text="{Binding CurrentTime}" VerticalAlignment="Center"/>  
+                                <ToggleButton Margin="0 0 5 0" VerticalAlignment="Center">Disconnect</ToggleButton> 
+                                <TextBox Watermark="hrs" Background="#33FFFFFF" Margin="0 0 5 0" VerticalAlignment="Center"/> 
+                                <TextBox Watermark="mins" Background="#33FFFFFF" Margin="0 0 5 0" VerticalAlignment="Center"/> 
+                                <Button Content="Change Time" VerticalAlignment="Center"/> 
+                            </StackPanel>
+                        </DockPanel>
+                        <TextBlock HorizontalAlignment="Left" Margin="0 10 0 5">Download Status</TextBlock>
+                        <Border Background="#33FFFFFF" CornerRadius="5" Padding="15 20 0 0" Margin="0 0 5 0" Height="30"><TextBlock   Height="40"></TextBlock></Border>
+                        <TextBlock HorizontalAlignment="Left" Margin="0 10 0 5">Save Location</TextBlock>
+                        <Grid HorizontalAlignment="Stretch" Margin="0 0 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" /> 
+                                <ColumnDefinition Width="Auto" />  
+                            </Grid.ColumnDefinitions>
+
+                            <Border Background="#33FFFFFF" CornerRadius="5" Padding="15 20 0 0" Margin="0 0 5 0" Height="30"><TextBlock   Height="40"></TextBlock></Border>
+                            <Button Grid.Column="1" HorizontalContentAlignment="Center" VerticalAlignment="Center"  Content="F" Width="30" Click="OpenFileButton_Clicked"/>
+                            
+                        </Grid>
+                        <TextBlock HorizontalAlignment="Left" Margin="0 10 0 5">Download History</TextBlock>
+                        <Border Background="#33FFFFFF" Margin="0 0 0 0" CornerRadius="10">
+                            <ScrollViewer Height="175" Width="400">
+                                <ListBox ItemsSource="{Binding allowedConnections}" Background="Transparent">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate> 
+                                            <TextBlock Width="300" Text="{Binding}" Background="Transparent"></TextBlock>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </ScrollViewer> 
+                        </Border>
+                       </StackPanel>
+                    
+                </Border>
+            </Grid>
+        </Grid>
+
+
     </Grid>
+
 </Window>

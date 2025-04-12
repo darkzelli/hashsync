@@ -75,3 +75,4 @@
 /Users/zach/creations/Code/Personal/rider/GetStartedApp/obj/Debug/net9.0/GetStart.4E492BE5.Up2Date
 /Users/zach/creations/Code/Personal/rider/GetStartedApp/obj/Debug/net9.0/GetStartedApp.genruntimeconfig.cache
 /Users/zach/creations/Code/Personal/rider/GetStartedApp/obj/Debug/net9.0/ref/GetStartedApp.dll
+/Users/zach/creations/Code/Personal/rider/GetStartedApp/obj/Debug/net9.0/GetStartedApp.sourcelink.json

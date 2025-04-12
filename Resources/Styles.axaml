@@ -3,8 +3,8 @@
     
     <Style Selector="TextBox">
         <Setter Property="Background" Value="#272728"/>
-        <Setter Property="BorderThickness" Value="0"/>  <!-- Remove outline -->
-        <Setter Property="BorderBrush" Value="Transparent"/>  <!-- Ensure no border color -->
+        <Setter Property="BorderThickness" Value="0"/> 
+        <Setter Property="BorderBrush" Value="Transparent"/> 
         <Style Selector="^:focus">
             <Setter Property="Foreground" Value="White" />
             <Style Selector="^ /template/ Border#PART_BorderElement">

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "KoXyJoa9zwQ=",
+  "dgSpecHash": "e8X4f0bGXjg=",
   "success": true,
   "projectFilePath": "/Users/zach/creations/Code/Personal/rider/GetStartedApp/GetStartedApp.csproj",
   "expectedPackageFiles": [
@@ -39,6 +39,7 @@
     "/Users/zach/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.0/microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
     "/Users/zach/.nuget/packages/microsoft.extensions.options/8.0.0/microsoft.extensions.options.8.0.0.nupkg.sha512",
     "/Users/zach/.nuget/packages/microsoft.extensions.primitives/8.0.0/microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "/Users/zach/.nuget/packages/microsoft.net.illink.tasks/9.0.3/microsoft.net.illink.tasks.9.0.3.nupkg.sha512",
     "/Users/zach/.nuget/packages/serilog/3.1.1/serilog.3.1.1.nupkg.sha512",
     "/Users/zach/.nuget/packages/serilog.aspnetcore/8.0.2/serilog.aspnetcore.8.0.2.nupkg.sha512",
     "/Users/zach/.nuget/packages/serilog.extensions.hosting/8.0.0/serilog.extensions.hosting.8.0.0.nupkg.sha512",
@@ -57,7 +58,10 @@
     "/Users/zach/.nuget/packages/system.io.pipelines/8.0.0/system.io.pipelines.8.0.0.nupkg.sha512",
     "/Users/zach/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
     "/Users/zach/.nuget/packages/system.text.json/8.0.4/system.text.json.8.0.4.nupkg.sha512",
-    "/Users/zach/.nuget/packages/tmds.dbus.protocol/0.20.0/tmds.dbus.protocol.0.20.0.nupkg.sha512"
+    "/Users/zach/.nuget/packages/tmds.dbus.protocol/0.20.0/tmds.dbus.protocol.0.20.0.nupkg.sha512",
+    "/Users/zach/.nuget/packages/microsoft.netcore.app.runtime.osx-arm64/9.0.3/microsoft.netcore.app.runtime.osx-arm64.9.0.3.nupkg.sha512",
+    "/Users/zach/.nuget/packages/microsoft.aspnetcore.app.runtime.osx-arm64/9.0.3/microsoft.aspnetcore.app.runtime.osx-arm64.9.0.3.nupkg.sha512",
+    "/Users/zach/.nuget/packages/microsoft.netcore.app.crossgen2.osx-arm64/9.0.3/microsoft.netcore.app.crossgen2.osx-arm64.9.0.3.nupkg.sha512"
   ],
   "logs": []
 }

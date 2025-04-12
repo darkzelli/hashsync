@@ -17,7 +17,6 @@ public class Clock : INotifyPropertyChanged
     private DateTime _nextCycle;
     private int hours = 0;
     private int minutes = 30;
-    private bool isRunning;
 
     private Clock(int hours, int minutes)
     {
@@ -26,6 +25,7 @@ public class Clock : INotifyPropertyChanged
         setNextCycle();
         _disTimer.Interval = TimeSpan.FromSeconds(1);
         _disTimer.Tick += DispatcherTimer_Tick;
+        startClock();
     }
 
     private Clock()
@@ -33,6 +33,7 @@ public class Clock : INotifyPropertyChanged
         setNextCycle();
         _disTimer.Interval = TimeSpan.FromSeconds(1);
         _disTimer.Tick += DispatcherTimer_Tick;
+        startClock();
     }
 
     public static Clock GetInstance(int hours, int minutes)
@@ -78,7 +79,7 @@ public class Clock : INotifyPropertyChanged
         }
         TimeSpan ts = _nextCycle - now;
         NextDownloadCycle = String.Format(
-            "Next update check (in {0}h{1}m{2}s)",
+            "Check in {0}h {1}m {2}s ",
             ts.Hours,
             ts.Minutes,
             ts.Seconds
