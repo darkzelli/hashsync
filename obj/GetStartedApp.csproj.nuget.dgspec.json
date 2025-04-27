@@ -53,8 +53,6 @@
               "version": "[11.2.6, )"
             },
             "Avalonia.Diagnostics": {
-              "include": "None",
-              "suppressParent": "All",
               "target": "Package",
               "version": "[11.2.6, )"
             },
@@ -70,6 +68,10 @@
               "target": "Package",
               "version": "[8.2.1, )"
             },
+            "Live.Avalonia": {
+              "target": "Package",
+              "version": "[1.4.1, )"
+            },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
@@ -79,6 +81,14 @@
             "Serilog.AspNetCore": {
               "target": "Package",
               "version": "[8.0.2, )"
+            },
+            "Supabase": {
+              "target": "Package",
+              "version": "[1.1.1, )"
+            },
+            "Supabase.Postgrest": {
+              "target": "Package",
+              "version": "[4.1.0, )"
             }
           },
           "imports": [

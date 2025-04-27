@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Platform.Storage;
 using GetStartedApp;
 using Components;
+using Supabase;
 
 namespace GetStartedApp.Views;
 
@@ -17,11 +19,32 @@ public partial class MainWindow : Window
 {
     private bool _mouseDownForWindowMoving = false;
     private PointerPoint _originalPoint;
+    public static Supabase.Client? supabase;
     public MainWindow()
     {
         InitializeComponent();
+        InitializeSupabase();
+        ConnectionController.CheckConnectionHash();
+
     }
-    
+
+    public async static Task InitializeSupabase()
+    {
+        var url = "https://xlhndvdfqkxdjpecvbqc.supabase.co";
+        var key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhsaG5kdmRmcWt4ZGpwZWN2YnFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzODg1OTMsImV4cCI6MjA1OTk2NDU5M30.sPsm8J_BGGx6y50Mlzx7wg1XCREBa8K2oEj_4HV0ZGc";
+
+        var options = new SupabaseOptions
+        {
+            AutoConnectRealtime = true
+        };
+
+        supabase = new Supabase.Client(url, key, options);
+        await supabase.InitializeAsync();
+    }
+    public static Supabase.Client? GetSupabase()
+    {
+        return supabase;
+    }
     private void InputElement_OnPointerMoved(object? sender, PointerEventArgs e)
     {
         if (!_mouseDownForWindowMoving) return;
@@ -131,20 +154,20 @@ public partial class MainWindow : Window
                     if (!visited.Contains(item))
                     {
                         visited.Add(item);
-                        stack.Push((item, nestedPanel)); // 👈 This is the key!
+                        stack.Push((item, nestedPanel));
                     }
                 }
             }
         }
         
     }
+
     
     private async void OpenFileButton_Clicked(object sender, RoutedEventArgs args)
     {
         var rootPanel = this.FindControl<StackPanel>("FileTree");
         rootPanel.Children.Clear();
         var topLevel = TopLevel.GetTopLevel(this);
-        // Get top level from the current control. Alternatively, you can use Window reference instead.
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
             Title = "Select a Folder",
@@ -175,7 +198,47 @@ public partial class MainWindow : Window
             var folder = folders[0];
             var fullPath = folder.Path?.LocalPath;
     
+            Clock.GetInstance().setSrcPath(fullPath);
+            Clock.GetInstance().setSrcName(folder.Name);
             FolderName.Text = folder.Name;
         }
+    }
+    
+    private async void OpenDownloadFile_Clicked(object sender, RoutedEventArgs args)
+    {
+        var topLevel = TopLevel.GetTopLevel(this);
+        var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
+        {
+            Title = "Select a Folder",
+            AllowMultiple = false
+        });
+        if (!folders.Any()) { return;}
+        
+        if (folders.Count > 0)
+        {
+            var folder = folders[0];
+            var fullPath = folder.Path?.LocalPath;
+    
+            DownloadClock.GetInstance().setSrcPath(fullPath);
+            DownloadClock.GetInstance().setSrcName(folder.Name);
+            DownloadFileName.Text = folder.Name;
+        }
+    }
+
+    private void ToggleHash_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (Clock.GetInstance().IsRunning())
+        {
+            Clock.GetInstance().stopClock();
+        }
+        else
+        {
+            Clock.GetInstance().startClock();
+        }
+    }
+
+    private void ConnectConnection(object? sender, RoutedEventArgs e)
+    {
+        ConnectionController.GetInstance().SetCurrentConnection(ConnectionUUID.Text ?? string.Empty);
     }
 }

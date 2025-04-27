@@ -35,4 +35,13 @@ public static class DirectoryHasher
             return BitConverter.ToString(sha256.Hash ?? Array.Empty<byte>()).Replace("-", "").ToLowerInvariant();
         }
     }
+
+    public static bool CompareHash(string currentHash, string hash)
+    {
+        if (currentHash == hash)
+            return true;
+        else
+            return false;
+
+    }
 }
